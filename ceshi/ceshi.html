@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    function checkPalindrom(str) {
+      str = String(str)
+      if (str.charAt(0) == '-') {
+        let str_r = str.substr(1)
+        return Number('-' + str_r.split("").reverse().join(""))
+      }
+      return str = str.split('').reverse().join('')
+    };
+    console.log(checkPalindrom(-123))
+
+    function noRepeat(arr) {
+      let obj = {}
+      let newArr = []
+      for (let i = 0, l = arr.length; i < l; i++) {
+        if (!obj[arr[i]]) {
+          obj[arr[i]] = true
+          newArr.push(arr[i])
+        }
+      }
+      return newArr
+    };
+    console.log(noRepeat([1, 2, 3, 3, 4, 5, 5,]))
+    let total = 0
+    function statistics(str) {
+      let index = str.indexOf('a')
+      if (index > -1) {
+        ++total
+        str = str.substring(index + 1)
+        statistics(str)
+      }
+      return total
+    }
+    console.log(statistics('abcaaaa'))
+
+    function bubbling(arr) {
+      for (let i = 0, len = arr.length; i < len; i++) {
+        for (let j = 0, lenlen = arr.length - i; j < lenlen; j++) {
+          if (arr[j] > arr[j + 1]) {
+            let tamp = arr[j]
+            arr[j] = arr[j + 1]
+            arr[j + 1] = tamp
+          }
+        }
+      }
+      return arr
+    }
+    console.log(bubbling([9, 4, 5, 6, 7, 1, 2]))
+
+    function factorialize(num) {
+      if (num < 0) {
+        return -1;
+      } else if (num === 0 || num === 1) {
+        return 1;
+      } else {
+        return (num * factorialize(num - 1));
+      }
+    }
+    console.log(factorialize(5))
+
+
+    let arrReduce = [1, 2, 3, [4, 5, 6,[9,[10]]]]
+    function reduce(arr) {
+      if (!arr.length) return
+      return arr.reduce((pre, cur) => {
+        return pre.concat(Array.isArray(cur) ? reduce(cur) :cur)
+      }, [])
+    }
+
+    console.log(reduce(arrReduce))
+
+    let aa = [1,2,3];
+    let aaa = [4,5,6,[9]]
+    console.log(aaa.toString().split(','))
+
+
+    function flatten(arr) {
+    var res = [];
+    arr.map(item => {
+        if(Array.isArray(item)) {
+            res = res.concat(flatten(item));
+        } else {
+            res.push(item);
+        }
+    });
+    return res;
+}
+console.log(flatten(arrReduce))
+  </script>
+</body>
+
+</html>

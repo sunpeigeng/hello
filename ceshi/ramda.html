@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://cdn.bootcss.com/ramda/0.26.1/ramda.js"></script>
+  <script src="https://cdn.bootcss.com/moment.js/2.19.4/moment.min.js"></script>  
+  
+  
+  
+  <title>ramda</title>
+</head>
+
+<body>
+  <script>
+    var _ = R
+    const { log } = console
+    const responseData = {
+      "code": 5001,
+      "data": { "11": { "000300": 0.0 }, "12": { "000300": 0.0 }, "13": { "000300": 0.0 }, "17": {}, "14": { "000300": 0.0 }, "15": { "000300": 0.0 }, "16": { "000300": 0.0 }, "isFinish": 1, "1": { "1154682592514228224": -0.00317145716913613 }, "2": { "1154682592514228224": -0.00317145716913613 }, "3": { "1154682592514228224": -0.00317145716913613 }, "4": { "1154682592514228224": -0.00317145716913613 }, "5": { "1154682592514228224": -0.00317145716913613 }, "6": { "1154682592514228224": -0.00317145716913613 }, "7": { "1154682592514228224": -0.00317145716913613 }, "8": { "1154682592514228224": -0.00317145716913613 }, "9": { "000300": 0.0 }, "10": { "000300": 0.0 } }, "success": true
+    }
+    const getData = str => _.prop('data', str)
+    const isEven = n => (typeof n == 'object')
+    const getFilterData = _.filter(isEven)
+    const resMap = str => Object.keys(str).length == 0 ? "" : Object.keys(str)[0]
+    const getMap = _.map(resMap)
+    const transformArr = str => Object.values(str)
+    const setArr = str => Array.from(new Set(str))
+    const constructArr = (str) => {
+      if (str.some(item => item == "")) {
+        let arr = ["--", "--"]
+        let arr1 = str.filter(item => item != "")
+        arr.splice(1, 0, ...arr1)
+        return arr
+      } else {
+        return str
+      }
+    }
+    const handleData = _.compose(constructArr, setArr, transformArr, getMap, getFilterData, getData)(responseData)
+
+
+
+
+
+    const data = {
+      "1": { "1161905649781809152": [{ "value": 0.0, "key": "2019-04-10" }, { "value": -3.94370925141871E-4, "key": "2019-04-18" }, { "value": -3.0563671652642253E-4, "key": "2019-04-19" }, { "value": -4.5352706421876253E-4, "key": "2019-04-22" }, { "value": -1.8732443837263946E-4, "key": "2019-04-23" }, { "value": -3.647928556034252E-4, "key": "2019-04-24" }, { "value": -0.0012619909628990966, "key": "2019-04-25" }, { "value": -0.011547454455401356, "key": "2019-04-26" }] },
+
+      "2": { "000300": [{ "value": -0.003710205601344913, "key": "2019-04-17" }, { "value": 0.008163944772704537, "key": "2019-04-19" }, { "value": -0.015078366578833888, "key": "2019-04-22" }, { "value": -0.016694518388669054, "key": "2019-04-23" }, { "value": -0.01398281059995551, "key": "2019-04-24" }, { "value": -0.035579953003980834, "key": "2019-04-25" }, { "value": -0.04843488752482781, "key": "2019-04-27" }] }
+    }
+    const getDataProp = (type,str) => _.prop(type, str)
+    const curryGetDataProp = _.curry(getDataProp)
+    const handleDataOne = _.compose(curryGetDataProp('1161905649781809152'))(data['1'])
+    const handleDataTwo = _.compose(curryGetDataProp('000300'))(data['2'])
+    const concatDataTwo = _.concat(handleDataTwo)(handleDataOne)//以000300来合并1161905649781809152
+    const concatDataOne = _.concat(handleDataOne)(handleDataTwo)//以1161905649781809152来合并000300
+    const concatDataTwoFun = (str) =>{
+       let  concatObj ={}
+       str.map(item => concatObj[item['key']] = true)
+       return concatObj
+    }
+    let concatDataTwoObj = _.compose(concatDataTwoFun)(handleDataTwo)
+    let concatDataOneObj = _.compose(concatDataTwoFun)(handleDataOne)
+    const repeat = (str) => {
+        let obj = {},arr=[]
+        str.map((item) => {
+          if(!obj[item['key']]){
+             obj[item['key']] = true
+             arr.push(item)
+          }
+        })
+        return arr
+    }
+    const sortFun = _.sort((a,b) => moment(a.key).valueOf() - moment(b.key).valueOf())
+    const finalOneFun = (concatDataOneObj,str) => {
+        let arr = []
+        str.map(item => {
+          if(!concatDataOneObj[item['key']]){
+            arr.push({
+              value:0,
+              key:item['key']
+            })
+          }else{
+            arr.push(item)
+          }
+        })
+        return arr
+    }
+    const curryFinalOneFun = _.curry(finalOneFun)
+   const finalDataOne = _.compose(sortFun,curryFinalOneFun(concatDataOneObj), _.compose(repeat))(concatDataOne)
+   const finalDataTwo = _.compose(sortFun,curryFinalOneFun(concatDataTwoObj), _.compose(repeat))(concatDataTwo)
+console.log(finalDataOne)
+console.log(finalDataTwo)
+
+
+
+
+     </script>
+</body>
+
+</html>

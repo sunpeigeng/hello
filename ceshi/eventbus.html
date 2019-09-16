@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>eventbus</title>
+</head>
+
+<body>
+  <script>
+    // var arr = []
+    // var sun = function (params) { }
+
+    // arr.push(sun)
+    // console.log(arr)
+    // console.log(arr.indexOf(sun))
+    let arrlist = []
+    const sun0 = (i) => { if (i > 3) return console.log(i) }
+    const sun1 = (i) => { if (i > 3) return console.log(i) }
+    const sun2 = (i) => { if (i > 3) return console.log(i) }
+    const sun3 = (i) => { if (i > 3) return console.log(i) }
+    const sun4 = (i) => { if (i > 3) return console.log(i) }
+    const sun5 = (i) => { if (i > 3) return console.log(i) }
+    arrlist.push(sun0, sun1, sun2, sun3, sun4, sun5)
+    function peigeng() {
+      var list = [1, 2, 3, 4, 5]
+      for (let i = 0; i < arrlist.length; i++) {
+        arrlist[i](i)
+      }
+    }
+    peigeng()
+
+    let aaa = []
+    aaa.length?console.log(10):''
+
+
+     
+  
+  </script>
+</body>
+
+</html>

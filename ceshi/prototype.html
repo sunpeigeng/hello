@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>原型继承</title>
+</head>
+
+<body>
+  <script>
+    console.log(Math.round(12.7899, 2))
+    var myVar = "3.14159"
+    console.log("" + myVar)
+    console.log(~~myVar)
+    console.log(1 * myVar)
+    console.log(!!myVar)
+    console.log(!!0)
+
+    var arr = [1, 2, 3, 4, 5, 6, 7]
+    var sum = 0, len = arr.length
+    while (len--) {
+      sum += arr[len]
+    }
+    console.log(sum)
+
+    /*
+       构造函数模式
+       */
+    function Person(name, age) {
+      var o = new Object()
+      o.name = name
+      o.age = age
+      o.sayName = function () {
+        console.log(this.name)
+      }
+      return o
+    }
+    var person1 = new Person('sunpeigeng', 90)
+    person1.sayName()
+
+    /*
+       构造函数模式+原型模式
+       */
+    function Animal(name, age) {
+      this.name = name
+      this.age = age
+    }
+    Animal.prototype = {
+      constructor: Animal,
+      sayName: function () {
+        console.log(this.name)
+      }
+    }
+    var animal1 = new Animal('大象', 15)
+    animal1.sayName()
+
+
+    /*
+    寄生组合式继承
+    */
+    function superThing(name, age) {
+      this.name = name
+      this.age = age
+    }
+    superThing.prototype.sayName = function () {
+      console.log(this.name)
+    }
+    function Thing(name, age, height) {
+      superThing.call(this, name, age)
+      this.height = height
+    }
+    function inheritPrototype(subObj, superObj) {
+      var proObj = Object.create(superObj)
+      subObj.prototype = proObj.prototype
+      subObj.prototype.constructor = subObj
+    }
+
+    inheritPrototype(Thing, superThing)
+    var thing1 = new Thing('桌子', 89, 150)
+    thing1.sayName()
+    let obj = {
+      listener: {},
+      on(...params) {
+        if (!params.length) return
+        if (this.listener[params[0]]) {
+          this.listener[params[0]].push(params[1])
+        } else {
+          this.listener[params[0]] = []
+          this.listener[params[0]].push(params[1])
+        }
+      },
+      emit(...value) {
+        if (!value.length) return
+        if (!this.listener[value[0]]) return
+        this.listener[value[0]].forEach(l => l(value[1]))
+      },
+      off(...value) {
+        if (!value.length || !value[0]) return
+        if (!this.listener[value[0]].length) return
+        if (value[1]) {
+          let index = this.listener[value[0]].indexOf(value[1])
+          if (index < 0) return
+          this.listener[value[0]].splice(index, 1)
+        } else {
+          delete this.listener[value[0]]
+        }
+      }
+    }
+
+   
+  </script>
+</body>
+
+</html>

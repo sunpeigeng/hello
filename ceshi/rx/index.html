@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdn.bootcss.com/rxjs/5.6.0-forward-compat.5/Rx.min.js"></script>
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+</head>
+
+<body>
+  <div>rx</div>
+  <button>点击</button>
+  <input type="text" id='input'>
+  <a href="https://music.163.com/#/playlist?id=2602222983">111</a>
+  <script>
+
+    // var observable = Rx.Observable.create(function (observer) {
+    //   observer.next(1);
+    //   observer.next(2);
+    //   observer.next(3);
+
+    // })
+    //   .observeOn(Rx.Scheduler.async)
+    // console.log('just before subscribe')
+    // observable.subscribe({
+    //   next: x => console.log('got value' + x),
+    //   error: err => console.error('something' + err),
+    //   complete: () => console.log('done')
+    // })
+    // console.log('just after subscribe');
+
+    // var weight = Rx.Observable.of(70, 72, 76, 79, 75)
+    // var height = Rx.Observable.of(1.76, 1.77, 1.78, 1)
+    // var bml = Rx.Observable.combineLatest(weight, height, (w, h) => {
+    //   console.log(w, h)
+    //   return w / (h * h)
+    // })
+    // bml.subscribe(x => console.log('BMI is ' + x))
+
+    // var timer1 = Rx.Observable.interval(1000).take(10);
+    // var timer2 = Rx.Observable.interval(2000).take(6);
+    // var timer3 = Rx.Observable.interval(500).take(10);
+    // var result = Rx.Observable.concat(timer1, timer2, timer3);
+    // result.subscribe(x => console.log(x));
+
+    // var result = Rx.Observable.create(function (subscriber) {
+    //   console.log(1)
+    //   subscriber.next(Math.random());
+    //   subscriber.next(Math.random());
+    //   subscriber.next(Math.random());
+    //   subscriber.complete();
+    // });
+    // result.subscribe(x => console.log(x));
+
+    // var clicksOrInterval = Rx.Observable.defer(function () {
+    //   if(Math.random() > 0.5){
+    //     return Rx.Observable.fromEvent(document,'click')
+    //   }else{
+    //     return Rx.Observable.interval(1000)
+    //   }
+    // });
+    // clicksOrInterval.subscribe(x => console.log(x))
+
+    // var result = Rx.Observable.empty().startWith(7);
+    // result.subscribe(x => console.log(x));
+
+    // var interval = Rx.Observable.interval(10000);
+    // var result = interval.mergeMap(x =>{
+    //   return   x % 2 == 1 ? Rx.Observable.of('a', 'b', 'c') : Rx.Observable.empty()
+    // }
+
+    // );
+    // result.subscribe(x => console.log(x));
+
+    //jQuery
+    // var input = $('#input');
+
+    // var source = Rx.Observable.fromEventPattern(
+    //   function add(h) {
+    //     input.bind('click', h);
+    //   },
+    //   function remove(h) {
+    //     console.log(11)
+    //     input.unbind('click', h);
+    //   }
+    // );
+
+    // var subscription = source.subscribe(
+    //   function (x) {
+    //     console.log('Next: Clicked!',x);
+    //   },
+    //   function (err) {
+    //     console.log('Error: ' + err);
+    //   },
+    //   function () {
+    //     console.log('Completed');
+    //   });
+
+    // input.trigger('click');
+
+    // var clicks = Rx.Observable.fromEvent(document, 'click');
+    // var timer = Rx.Observable.interval(1000);
+    // var clicksOrTimer = Rx.Observable.merge(clicks, timer);
+    // clicksOrTimer.subscribe(x => console.log(x));
+
+    // var timer1 = Rx.Observable.interval(1000).take(10);
+    // var timer2 = Rx.Observable.interval(2000).take(6);
+    // var timer3 = Rx.Observable.interval(500).take(10);
+    // var concurrent = 8; // the argument
+    // var merged = Rx.Observable.merge(timer1, timer2, timer3);
+    // merged.subscribe(x => console.log(x));
+
+    // function info() {
+    //   console.log('Will not be called');
+    // }
+    // var result = Rx.Observable.never().startWith(7);
+    // result.subscribe(x => console.log(x), info, info);
+    // var source = Rx.Observable.never();
+
+    // var subscription = source.subscribe(
+    //   function (x) {
+    //     console.log('Next: ' + x);
+    //   },
+    //   function (err) {
+    //     console.log('Error: ' + err);
+    //   },
+    //   function () {
+    //     console.log('Completed');
+    //   });
+    //  var numbers = Rx.Observable.timer(2000)
+    //  var numbers1 = numbers.switchMap(()=>{
+    //    return Rx.Observable.of([1,23,56])
+    //  }) 
+    //  numbers1.subscribe(x=>{
+    //    console.log(x)
+    //  })
+
+    // var click$ = Rx.Observable.fromEvent(document, 'click')
+    // var result = click$.audit(() => {
+    //   return Rx.Observable.interval(2000)
+    // })
+    // result.subscribe(x => console.log(x))
+
+    // var click$ = Rx.Observable.fromEvent(document, 'click')
+    // var interval = Rx.Observable.interval(1000)
+    // var buffered = interval.buffer(click$)
+    // buffered.subscribe(x => {
+    //   console.log(x)
+    // })
+
+    // var clicks = Rx.Observable.fromEvent(document,'click')
+    // var buffered = clicks.bufferCount(2)
+    // buffered.subscribe(x=>{
+    //   console.log(x)
+    // })
+
+    // var clicks = Rx.Observable.fromEvent(document, 'click');
+    // var buffered = clicks.bufferTime(1000000);
+    // buffered.subscribe(x => console.log(x));
+
+    // var weight = Rx.Observable.of(70, 72, 76, 79, 75);
+    // var height = Rx.Observable.of(1.76, 1.77, 1.78);
+    // var bmi = Rx.Observable.combineLatest(weight, height, (w, h) => {
+    //   console.log(h)
+    //   return w / (h * h)
+    // });
+    // bmi.subscribe(x => console.log('BMI is ' + x));
+
+    // var clicks = Rx.Observable.fromEvent(document, 'click');
+    // var higherOrder = clicks.map(ev =>
+    //   Rx.Observable.interval(1000).take(3)
+    // ).take(3);
+    // var result = higherOrder.combineAll();
+    // result.subscribe(x => console.log(x));
+
+    // const timerOne = Rx.Observable.timer(1000,4000)
+    // const timerTwo = Rx.Observable.timer(2000,4000)
+    // const timerThree = Rx.Observable.timer(3000,4000)
+    // const combine = Rx.Observable.combineLatest(timerOne,timerTwo,timerThree)
+    // const timer = combine.subscribe((x)=>{
+    //   console.log(x)
+    // })
+
+    // const sourceOne = Rx.Observable.of('Hello')
+    // const sourceTwo = Rx.Observable.of('World')
+    // const sourceThree = Rx.Observable.of('Goodbye')
+    // const example = Rx.Observable.zip(
+    //   Rx.Observable.timer(1000, 4000).switchMap(x => {
+    //     return sourceOne
+    //   }),
+    //   Rx.Observable.timer(2000, 5000).switchMap(x => {
+    //     return sourceTwo
+    //   }),
+    //   Rx.Observable.timer(1000, 3000).switchMap(x => {
+    //     return sourceThree
+    //   })
+    // )
+    // example.subscribe((x) => {
+    //   console.log(x)
+    // })
+
+    // const first = Rx.Observable.interval(2500)
+    // const second = Rx.Observable.interval(2000)
+    // const third = Rx.Observable.interval(1500)
+    // const four = Rx.Observable.interval(1000)
+
+    // const example = Rx.Observable.merge(
+    //   first.mapTo('first'),
+    //   second.mapTo('second'),
+    //   third.mapTo('third'),
+    //   four.mapTo('four')
+    // )
+    // example.subscribe(x => {
+    //   console.log(x)
+    // })
+    const { tap, mapTo, scan, last, first, filter } = Rx.operators
+    const { pipe, of, interval } = Rx.Observable
+    // const source = Rx.Observable.timer(1000)
+    // const example = source.pipe(
+    //   tap((x) => console.log('***SIDE EFFECT***',x)),
+    //   mapTo('123')
+    // );
+    // example.subscribe((x) => {
+    //   console.log(x)
+    // })
+
+    const source = interval(1000)
+    const isEven = val => val % 2 === 0;
+         const evenSource = source.pipe(filter(isEven))
+    const evenNumberCount = evenSource.pipe(scan((pre, cur) => {
+      console.log(pre)
+      return pre + 1
+    }, 0))
+    const fiveEvenNumber = evenNumberCount.pipe(filter(val => val > 5))
+    // fiveEvenNumber.subscribe((x) => {
+    //   console.log(x)
+    // })
+
+  </script>
+</body>
+
+</html>

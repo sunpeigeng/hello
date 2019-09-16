@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdn.bootcss.com/ramda/0.26.1/ramda.js"></script>
+    <title>leetcode</title>
+</head>
+
+<body>
+    <script>
+        let _ = R
+        const reverseArr = (str) => {
+            let arr = []
+            const fun = (i) => {
+                if (i >= str.length) return arr
+                arr.push(str[i].reverse())
+                return fun(i + 1)
+            }
+            fun(0)
+            const fun1 = (i) => {
+                if (i >= str.length) return arr
+                arr[i].map((item, index) => {
+                    if (item == 1) return arr[i][index] = 0
+                    if (item == 0) return arr[i][index] = 1
+                })
+                return fun1(i + 1)
+            }
+            fun1(0)
+
+            return arr
+        }
+
+        reverseArr([[1, 1, 0], [1, 0, 1], [0, 0, 0]])
+
+        var subdomainVisits = function (cpdomains) {
+            let map = new Map()
+            let res = []
+            for (let i = 0; i < cpdomains.length; i++) {
+                let [num, url] = cpdomains[i].split(' ')
+                while (url.includes('.')) {
+                    if (map.has(url)) {
+                        map.set(url, (Number(map.get(url)) + Number(num)))
+                    } else {
+                        map.set(url, num)
+                    }
+                    url = url.slice(url.indexOf('.') + 1)
+                }
+                if (map.has(url)) {
+                    map.set(url, (Number(map.get(url)) + Number(num)))
+                } else {
+                    map.set(url, num)
+                }
+            }
+            map.forEach((value, key) => {
+                res.push(`${value} ${key}`)
+            })
+            return res
+        };
+        console.log(subdomainVisits(["900 google.mail.com", "50 yahoo.com", "1 intel.mail.com", "5 wiki.org"]))
+
+
+
+        var solutionFun = function (str) {
+            let map = new Map()
+            let res = []
+            for (let i = 0; i < str.length; i++) {
+                let [num, url] = str[i].split(' ')
+                while (url.includes('.')) {
+                    if (map.has(url)) {
+                        map.set(url, (Number(map.get(url)) + Number(num)))
+                    } else {
+                        map.set(url, num)
+                    }
+                    url = url.slice(url.indexOf('.') + 1)
+                }
+                if (map.has(url)) {
+                    map.set(url, (Number(map.get(url)) + Number(num)))
+                } else {
+                    map.set(url, num)
+                }
+            }
+            map.forEach((value, key) => {
+                res.push(`${value} ${key}`)
+            })
+            return res
+        }
+
+
+        const handleAdd = (arr, target) => {
+            let index = 0, arr1
+            for (let i = 0, len = arr.length; i < len; i++) {
+                for (let j = 0, len1 = arr.length; j < len1; j++) {
+                    if (!(i == j)) {
+                        if (arr[i] + arr[j] == 9) {
+                            ++index
+                            if (index >= 2) {
+                                arr1 = new Array(i, j)
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+
+            // console.log(arr1)
+        }
+        handleAdd([2, 7, 11, 15], 9)
+
+
+
+
+        let index = 0, arr1
+        const jjj = (arr, i) => {
+            arr.map((item, j) => {
+                if (!(i == j)) {
+                    if (arr[i] + arr[j] == 9) {
+                        ++index
+                        if (index >= 2) {
+                            arr1 = new Array(i, j)
+                            return arr1
+                        }
+                    }
+                }
+            })
+            return arr1
+        }
+        const jjjCurry = _.curry(jjj)
+        function sunsunsun(arr) {
+            return arr.map((item, i) => {
+                return _.compose(jjjCurry(arr))(i)
+            })
+        }
+        let ai = [2, 7, 11, 15]
+        console.log(sunsunsun(ai))
+
+        let createStore = (reducer) => {
+            let state;
+            //获取状态对象
+            //存放所有的监听函数
+            let listeners = [];
+            let getState = () => state
+            //提供一个方法供外部调用派发action
+            let dispatch = (action) => {
+                //调用管理员reducer得到新的state
+                state = reducer(state, action)
+                //执行所有的监听函数
+                listeners.forEach((l) => l())
+            }
+            //订阅状态变化事件，当状态改变发生之后执行监听函数
+            let subscribe = (listener) => {
+                listeners.push(listener);
+            }
+            dispatch();
+            return {
+                getState,
+                dispatch,
+                subscribe
+            }
+        }
+        var reducer = (state = 0, action) => {
+            if (!action) return state;
+            console.log(action)
+            switch (action.type) {
+                case 'INCREMENT':
+                    return state + 1;
+                case 'DECREMENT':
+                    return state - 1;
+                default:
+                    return state
+            }
+        }
+       let combineReducers = (reducers)=>{
+           return function (state={},action) {
+               let newState = {}
+               for(var attr in reducers){
+                   newState[attr] = reducers[attr](state[attr],action)
+               }
+               return newState
+           }
+       }
+        var store = createStore(combineReducers({sun:reducer}))
+        store.subscribe(function () {
+            console.log(store.getState())
+        })
+        store.dispatch()
+    </script>
+</body>
+
+</html>

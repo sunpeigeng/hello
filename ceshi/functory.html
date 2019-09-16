@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+   function animal(name,sex) {
+     let obj = new Object()
+     obj.name = name
+     obj.sex = sex
+     obj.saySex = function () {
+      // alert(`我的性别是${this.sex}`)
+     }
+     return obj
+   }
+   let monkey = animal('猴子','母')
+   console.log(monkey.name)
+   monkey.saySex()
+
+   function Foo() {
+     if(!(this instanceof Foo)){return new Foo()}
+   }
+
+  function createJelly() {
+    return {
+      type:'jelly',
+      colour:'red',
+      scoops:3
+    }
+  }
+   
+   function createIceCream(flavour='vanilla') {
+     return {
+       type:'icecream',
+       scoops:3,
+       flavour
+     }
+   }
+
+   const  widthUser = WrappedComponent => {
+     const user = sessionStorage.getItem('user');
+     return (props) => <WrappedComponent user={user} {...props}/>
+   }
+   const userPage = props => {
+     return (
+       <div class="user-container">
+          <p>my name is {props.user}!</p>
+       </div>
+     )
+   }
+
+   export default withUser(userPage)
+  </script>
+</body>
+</html>

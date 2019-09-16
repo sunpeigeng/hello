@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    let obj0 = [{ a: 9, b: 10, sun: () => { console.log(100) } }]
+    //let obj1 = Object.create(obj0)
+    let [...obj2] = obj0
+    obj2.push({ a: 8 })
+    obj2[0]['bb'] = 9
+    console.log(obj2)
+    console.log(obj0)
+
+
+
+    Array.prototype.clone = function () {
+      let a = [];
+      for (let i = 0, l = this.length; i < l; i++) {
+        a.push(this[i]);
+      }
+      return a;
+    }
+    let arr = [{a:1}, 'bbb', 'ccc', 'wwwww', 'ddd']
+    // let [...arr2] = arr
+    // arr2[0]['b'] = 10
+    let arr1 = arr.concat()
+    arr1[0]['nn'] = 10
+    console.log(arr1)
+    console.log(arr)
+
+
+    var o = {arr:[4,2,3,1]}
+      o
+      .arr
+      .sort()
+      .map((item)=>{console.log(item)})
+
+
+     let len = 10
+     (while(len--){
+      console.log(len)
+     })(len)
+  </script>
+</body>
+
+</html>

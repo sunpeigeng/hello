@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <!-- <script src="jquery.min.js"></script> -->
+  <script type="text/javascript">
+    function testRegx(thisObj) {
+      var _this = thisObj;
+      var k = /^(100|[1-9]?\d(\.\d\d?\d?)?)%$|0$/;
+      var thisValue = $(_this).val();
+      alert(k.test(thisValue));
+    }
+  </script>
+
+</head>
+
+<body>
+  请输入百分比 <input type="text" οnblur="testRegx(this)" />
+  <script>
+    let obj = {
+
+    }
+    function get(...obj1) {
+      if (!obj1.length) return
+      let len = obj1[1], res = obj1[2], params = obj1[0];
+      let arr = Object.keys(params)
+      if (!(len < arr.length)) {
+        return res
+      } else {
+        let value = params[arr[len]]
+        value = value ? value : ''
+        res += arr[len] + '=' + value + (arr.length - 1 > len ? '&' : '')
+        return get(obj, ++len, res)
+      }
+    }
+    console.log(get(obj, 0, ''))
+
+    undefined ? console.log(100) : console.log(101)
+
+
+
+
+
+   
+
+    
+
+  </script>
+</body>

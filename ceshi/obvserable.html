@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // function create(subscriber) {
+    //   var obserable = {
+    //     subscribe: function (observer) {
+    //       subscriber(observer)
+    //     }
+    //   }
+    //   return obserable
+    // }
+    // var observer = {
+    //   next: function (value) {
+    //     console.log(value)
+    //   }
+    // }
+    // var observable = create(function (observer) {
+    //   observer.next(1)
+    //   observer.next(2)
+    //   observer.next(3)
+    // })
+
+
+    // observable.subscribe(observer)
+
+    function create(subscriber) {
+      return {
+        subscribe: function (observer) {
+          subscriber(observer)
+        }
+      }
+    }
+    var observer = {
+      next: function (value) {
+        console.log(value)
+      }
+    }
+    var obserable = create(function (observer) {
+      observer.next(1)
+    })
+
+    obserable.subscribe(observer)
+
+
+    function multiplyByTen(input) {
+      var output = Rx.Observable.create(function (observer) {
+        input.subscribe({
+          next:(v)=>observer.next(10*v),
+          error:(err)=>observer.error(err),
+          complete:()=>observer.complete()
+        })
+      })
+      return output;
+    }
+    var input = Rx.Observable.from([1,2,3,4])
+    var output = multiplyByTen(input)
+    output.subscribe(x=>console.log(x))
+
+
+  </script>
+</body>
+
+</html>

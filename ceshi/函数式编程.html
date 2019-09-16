@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="div"></div>
+  <script>
+    function compose(...args) {
+      return (result) => {
+        return args.reduceRight((result, fn) => {
+          return fn(result)
+        }, result)
+      }
+    }
+    function geng(a, b) {
+      console.log(a, b)
+    }
+    function curry(fn, ...args) {
+      if (args.length >= fn.length) {
+        return fn(...args)
+      }
+      return function (...args2) {
+        return curry(fn, ...args, ...args2)
+      }
+    }
+    curry(geng)(1)(2)
+    function stringToUpper(str) {
+      return str.toUpperCase()
+    }
+    function stringReverse(str) {
+      // return str.split('').reverse().join('')
+      return str
+    }
+    function find(str, targetStr) {
+      return str.includes(targetStr)
+    }
+    function judge(is) {
+      console.log(is ? 'yes' : 'no')
+    }
+    function twoCurry(fn) {
+      return function (targetStr) {
+        return function (str) {
+          return fn(str, targetStr)
+        }
+      }
+    }
+    // function findCurry(targetStr) {
+    //   return str => str.includes(targetStr)
+    // }
+    // const findTaoweng = findCurry('TAOWENG')
+    const findCurry = twoCurry(find)
+    const findTaoweng = findCurry('TAOWENG')
+    compose(judge, findTaoweng, stringReverse, stringToUpper)('SUNTAOWENG')
+
+
+
+    // 通用的部分应用函数的核心实现
+    // function partial(fn, ...args) {
+    //   return (..._arg) => {
+    //     return fn(...args, ..._arg);
+    //   }
+    // }
+
+    // function debug(type, firstArg, secondArg) {
+    //   if (type === 'log') {
+    //     console.log(firstArg, secondArg)
+    //   } else if (type === 'info') {
+    //     console.info(firstArg, secondArg)
+    //   } else if (type === 'warn') {
+    //     console.warn(firstArg, secondArg)
+    //   } else {
+    //     console.error(firstArg, secondArg)
+    //   }
+    // }
+
+    // const logDebug = partial(debug, 'log')
+    // const infoDebug = partial(debug, 'info')
+    // const warnDebug = partial(debug, 'warn')
+    // const errDebug = partial(debug, 'error')
+
+    // logDebug('log:', '测试部分应用')
+    // infoDebug('info:', '测试部分应用')
+    // warnDebug('warn:', '测试部分应用')
+    // errDebug('error:', '测试部分应用')
+
+    var map = (f, array) => {
+      // console.log(typeof f)
+      var newArray = []
+      for (let i = 0; i < array.length; i++) {
+        newArray[i] = f(array[i])
+      }
+      return newArray
+    }
+    var things = [1, 2, 3, 4, 5]
+
+    var newThings = map(v => v * 10, things)
+  </script>
+</body>
+
+</html>
